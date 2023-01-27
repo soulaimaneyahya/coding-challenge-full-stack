@@ -6,44 +6,28 @@ use Exception;
 use App\Models\Product;
 use App\Services\ProductService;
 use App\Services\CategoryService;
-use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use App\Http\Requests\ProductRequest;
-use App\Repositories\CategoryCollectionRepository;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class ProductController extends Controller
 {
-    private $categories;
-
     public function __construct(
         private ProductService $productService,
         private CategoryService $categoryService,
     ) {
-        $this->categories = CategoryCollectionRepository::allCategories();
+        //
     }
 
     /**
      * Display a listing of the resource.
      *
-     * @return View
+     * @return LengthAwarePaginator
      */
-    public function index(): View
+    public function index(): LengthAwarePaginator
     {
-        $products = $this->productService->all();
-        $categories = $this->categories;
-        // dd($products);
-        return view('products.index', compact('products', 'categories'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return View
-     */
-    public function create(): View
-    {
-        $categories = CategoryCollectionRepository::allCategories();
-        return view('products.create', compact('categories'));
+        return $this->productService->all();
     }
 
     /**
@@ -66,23 +50,11 @@ class ProductController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Product  $product
-     * @return View
+     * @return JsonResponse
      */
-    public function show(Product $product): View
+    public function show(Product $product): JsonResponse
     {
-        return view('products.show', compact('product'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Product  $product
-     * @return View
-     */
-    public function edit(Product $product): View
-    {
-        $categories = CategoryCollectionRepository::allCategories();
-        return view('products.edit', compact('product', 'categories'));
+        return $product;
     }
 
     /**

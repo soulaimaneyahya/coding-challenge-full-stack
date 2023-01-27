@@ -5,40 +5,27 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Models\Category;
 use App\Services\CategoryService;
-use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\CategoryRequest;
-use App\Repositories\CategoryCollectionRepository;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class CategoryController extends Controller
 {
-    private $parent_categories;
     public function __construct(
         private CategoryService $categoryService
     ) {
-        $this->parent_categories = CategoryCollectionRepository::parentCategories();
+        //
     }
 
     /**
      * Display a listing of the resource.
      *
-     * @return View
+     * @return LengthAwarePaginator
      */
-    public function index(): View
+    public function index(): LengthAwarePaginator
     {
-        $categories = $this->categoryService->all();
-        return view('categories.index', compact('categories'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return View
-     */
-    public function create(): View
-    {
-        $parent_categories = $this->parent_categories;
-        return view('categories.create', compact('parent_categories'));
+        return $this->categoryService->all();
     }
 
     /**
@@ -62,23 +49,11 @@ class CategoryController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Category  $category
-     * @return View
+     * @return JsonResponse
      */
-    public function show(Category $category): View
+    public function show(Category $category): JsonResponse
     {
-        return view('categories.show', compact('category'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @return View
-     */
-    public function edit(Category $category): View
-    {
-        $parent_categories = $this->parent_categories;
-        return view('categories.edit', compact('category', 'parent_categories'));
+        return $category;
     }
 
     /**
