@@ -6,9 +6,9 @@ use Exception;
 use App\Models\Product;
 use App\Services\ProductService;
 use App\Services\CategoryService;
-use Illuminate\Http\JsonResponse;
 use App\Http\Requests\ProductRequest;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class ProductController extends Controller
@@ -50,11 +50,11 @@ class ProductController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Product  $product
-     * @return JsonResponse
+     * @return Model
      */
-    public function show(Product $product): JsonResponse
+    public function show(Product $product): Model
     {
-        return $product;
+        return $this->productService->findOne($product->id);
     }
 
     /**

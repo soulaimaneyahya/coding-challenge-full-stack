@@ -5,7 +5,7 @@ namespace App\Repositories;
 use Exception;
 use App\Models\Product;
 use App\Interfaces\RepositoryInterface;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class ProductRepository implements RepositoryInterface
@@ -37,9 +37,9 @@ class ProductRepository implements RepositoryInterface
     /**
      * findOne Product
      * @param string $id
-     * @return Product
+     * @return Model
      */
-    public function findOne(string $id): Product
+    public function findOne(string $id): Model
     {
         try {
             return $this->product->findOrFail($id);

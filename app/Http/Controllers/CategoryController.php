@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Models\Category;
 use App\Services\CategoryService;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\CategoryRequest;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class CategoryController extends Controller
@@ -49,11 +49,11 @@ class CategoryController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Category  $category
-     * @return JsonResponse
+     * @return Model
      */
-    public function show(Category $category): JsonResponse
+    public function show(Category $category): Model
     {
-        return $category;
+        return $this->categoryService->findOne($category->id);
     }
 
     /**
