@@ -13,10 +13,7 @@
           </tr>
         </thead>
         <tbody v-if="categories && categories.length">
-          <category
-            v-for="(category, index) in categories" :key="index"
-            :category="category"
-          />
+          <category v-for="(category, index) in categories" :key="index" :category="category" />
         </tbody>
         <tbody v-else>
           <tr>
@@ -24,7 +21,9 @@
           </tr>
         </tbody>
       </table>
-      <div class="mt-2" />
+      <div class="mt-2">
+        <pagination :links="links" routeName="categories.index" />
+      </div>
     </div>
   </div>
 </template>
@@ -39,6 +38,7 @@ export default {
     return {
       loading: true,
       categories: [],
+      links: [],
     }
   },
   created() {
@@ -46,9 +46,14 @@ export default {
   },
   methods: {
     fetchCategories() {
-      axios.get('/categories')
+      axios.get('/categories', {
+        params: {
+          page: this.$route.query.page || 1,
+        },
+      })
         .then(res => {
           this.categories = res.data.data
+          this.links = res.data.links
         })
       this.loading = false
     },

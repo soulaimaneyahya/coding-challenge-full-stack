@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Models\Category;
 use App\Services\CategoryService;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\JsonResponse;
 use App\Http\Requests\CategoryRequest;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -32,16 +32,19 @@ class CategoryController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\CategoryRequest  $request
-     * @return RedirectResponse
+     * @return JsonResponse
      */
-    public function store(CategoryRequest $request)
+    public function store(CategoryRequest $request): JsonResponse
     {
         try {
-            $category = $this->categoryService->store($request->validated());
-            return redirect()->route('categories.edit', compact('category'))
-            ->with('alert-success', 'Category Created !');
+            $this->categoryService->store($request->validated());
+            return response()->json([
+                'message' => 'category created !',
+            ], 201);
         } catch (Exception $ex) {
-            return redirect()->route('categories.index')->with('alert-danger', 'Something going wrong!');
+            response()->json([
+                'message' => $ex->getMessage(),
+            ]);
         }
     }
 
@@ -61,30 +64,38 @@ class CategoryController extends Controller
      *
      * @param  \App\Http\Requests\CategoryRequest  $request
      * @param  \App\Models\Category  $category
-     * @return RedirectResponse
+     * @return JsonResponse
      */
-    public function update(CategoryRequest $request, Category $category)
+    public function update(CategoryRequest $request, Category $category): JsonResponse
     {
         try {
-            $category = $this->categoryService->update($request->validated(), $category);
-            return redirect()->route('categories.edit', compact('category'))->with('alert-info', 'Category Updated !');
+            $this->categoryService->update($request->validated(), $category);
+            return response()->json([
+                'message' => 'category updated !',
+            ], 200);
         } catch (Exception $ex) {
-            return redirect()->route('categories.index')->with('alert-danger', 'Something going wrong!');
+            response()->json([
+                'message' => $ex->getMessage(),
+            ]);
         }
     }
 
     /**
      * category destroy
      * @param Category $category
-     * @return RedirectResponse
+     * @return JsonResponse
      */
-    public function destroy(Category $category)
+    public function destroy(Category $category): JsonResponse
     {
         try {
             $this->categoryService->delete($category->id);
-            return redirect()->route('categories.index')->with('alert-info', 'Category Deleted !');
+            return response()->json([
+                'message' => 'category deleted !',
+            ], 200);
         } catch (Exception $ex) {
-            return redirect()->route('categories.index')->with('alert-danger', 'Something going wrong!');
+            response()->json([
+                'message' => $ex->getMessage(),
+            ]);
         }
     }
 }

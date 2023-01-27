@@ -2,7 +2,9 @@
   <div class="py-5 container mx-auto">
     <div class="d-flex align-items-center justify-content-between">
       <h3>Products</h3>
+      <router-link :to="{name: 'products.create'}" class="btn btn-sm btn-dark">Create</router-link>
     </div>
+    <filters></filters>
     <div class="py-3">
       <table class="table m-0 p-0">
         <thead>
@@ -15,7 +17,12 @@
           </tr>
         </thead>
         <tbody v-if="products && products.length">
-          <product v-for="(product, index) in products" :key="index" :product="product" />
+          <product
+            v-for="(product, index) in products"
+            :key="index"
+            :product="product"
+            @product:deleted="fetchProducts()"
+            />
         </tbody>
         <tbody v-else>
           <tr>
@@ -24,7 +31,7 @@
         </tbody>
       </table>
       <div class="mt-2">
-        <pagination :links="links" />
+        <pagination :links="links" routeName="products.index" />
       </div>
     </div>
   </div>

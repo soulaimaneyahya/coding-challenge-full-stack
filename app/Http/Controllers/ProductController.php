@@ -6,8 +6,8 @@ use Exception;
 use App\Models\Product;
 use App\Services\ProductService;
 use App\Services\CategoryService;
+use Illuminate\Http\JsonResponse;
 use App\Http\Requests\ProductRequest;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
@@ -34,15 +34,19 @@ class ProductController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\ProductRequest  $request
-     * @return RedirectResponse
+     * @return JsonResponse
      */
-    public function store(ProductRequest $request)
+    public function store(ProductRequest $request): JsonResponse
     {
         try {
-            $product = $this->productService->store($request->validated());
-            return redirect()->route('products.edit', compact('product'))->with('alert-success', 'Product Created !');
+            $this->productService->store($request->validated());
+            return response()->json([
+                'message' => 'product created !',
+            ], 201);
         } catch (Exception $ex) {
-            return redirect()->route('products.index')->with('alert-danger', 'Something going wrong!');
+            response()->json([
+                'message' => $ex->getMessage(),
+            ]);
         }
     }
 
@@ -62,15 +66,19 @@ class ProductController extends Controller
      *
      * @param  \App\Http\Requests\ProductRequest  $request
      * @param  \App\Models\Product  $product
-     * @return RedirectResponse
+     * @return JsonResponse
      */
-    public function update(ProductRequest $request, Product $product)
+    public function update(ProductRequest $request, Product $product): JsonResponse
     {
         try {
-            $product = $this->productService->update($request->validated(), $product);
-            return redirect()->route('products.edit', compact('product'))->with('alert-info', 'Product Updated !');
+            $this->productService->update($request->validated(), $product);
+            return response()->json([
+                'message' => 'product updated !',
+            ], 200);
         } catch (Exception $ex) {
-            return redirect()->route('products.index')->with('alert-danger', 'Something going wrong!');
+            response()->json([
+                'message' => $ex->getMessage(),
+            ]);
         }
     }
 
@@ -78,15 +86,19 @@ class ProductController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Product  $product
-     * @return RedirectResponse
+     * @return JsonResponse
      */
-    public function destroy(Product $product)
+    public function destroy(Product $product): JsonResponse
     {
         try {
             $this->productService->delete($product->id);
-            return redirect()->route('products.index')->with('alert-info', 'Product Deleted !');
+            return response()->json([
+                'message' => 'product deleted !',
+            ], 200);
         } catch (Exception $ex) {
-            return redirect()->route('products.index')->with('alert-danger', 'Something going wrong!');
+            response()->json([
+                'message' => $ex->getMessage(),
+            ]);
         }
     }
 }
