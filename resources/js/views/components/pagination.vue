@@ -5,7 +5,7 @@
       :key="index" 
       class="py-2 px-4 rounded-md" 
       :class="{'link-active': link.active}"
-      :to="{}"
+      :to="{ name: 'products.index', query: {page: index} }"
       v-html="link.label"
     />
   </div>

@@ -3,7 +3,7 @@
     <div class="d-flex align-items-center justify-content-between">
       <h3>Categories</h3>
     </div>
-    <di class="py-3">
+    <div class="py-3">
       <table class="table m-0 p-0">
         <thead>
           <tr class="fw-bold">
@@ -25,12 +25,14 @@
         </tbody>
       </table>
       <div class="mt-2" />
-    </di>
+    </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
 import category from '@/views/categories/partials/category.vue'
+
 export default {
   components: { category },
   data() {

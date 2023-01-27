@@ -3,7 +3,7 @@
     <div class="d-flex align-items-center justify-content-between">
       <h3>Products</h3>
     </div>
-    <di class="py-3">
+    <div class="py-3">
       <table class="table m-0 p-0">
         <thead>
           <tr class="fw-bold">
@@ -15,10 +15,7 @@
           </tr>
         </thead>
         <tbody v-if="products && products.length">
-          <product
-            v-for="(product, index) in products" :key="index"
-            :product="product"
-          />
+          <product v-for="(product, index) in products" :key="index" :product="product" />
         </tbody>
         <tbody v-else>
           <tr>
@@ -29,12 +26,11 @@
       <div class="mt-2">
         <pagination :links="links" />
       </div>
-    </di>
+    </div>
   </div>
 </template>
 
 <script>
-
 import axios from 'axios'
 import product from '@/views/products/partials/product.vue'
 
@@ -47,12 +43,24 @@ export default {
       links: [],
     }
   },
+  watch: {
+    '$route.query.page': {
+      immediate: true,
+      handler() {
+        this.fetchProducts()
+      },
+    },
+  },
   created() {
     this.fetchProducts()
   },
   methods: {
     fetchProducts() {
-      axios.get('/products')
+      axios.get('/products', {
+        params: {
+          page: this.$route.query.page || 1,
+        },
+      })
         .then(res => {
           this.products = res.data.data
           this.links = res.data.links
