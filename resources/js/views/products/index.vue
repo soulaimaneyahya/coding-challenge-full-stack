@@ -4,7 +4,10 @@
       <h3>Products</h3>
       <router-link :to="{name: 'products.create'}" class="btn btn-sm btn-dark">Create</router-link>
     </div>
-    <filters></filters>
+    <filters
+    @selected:filter="selectedFilter($event)"
+    :allCategories="allCategories"
+    />
     <div class="py-3">
       <table class="table m-0 p-0">
         <thead>
@@ -22,7 +25,7 @@
             :key="index"
             :product="product"
             @product:deleted="fetchProducts()"
-            />
+          />
         </tbody>
         <tbody v-else>
           <tr>
@@ -31,7 +34,7 @@
         </tbody>
       </table>
       <div class="mt-2">
-        <pagination :links="links" routeName="products.index" />
+        <pagination :links="links" route-name="products.index" />
       </div>
     </div>
   </div>
@@ -48,6 +51,10 @@ export default {
       loading: true,
       products: [],
       links: [],
+      allCategories: [],
+      selectedSort: null,
+      selectedOrder: null,
+      selectedCategory: null
     }
   },
   watch: {
@@ -66,6 +73,9 @@ export default {
       axios.get('/products', {
         params: {
           page: this.$route.query.page || 1,
+          sort_by: this.selectedSort,
+          order: this.selectedOrder,
+          category: this.selectedCategory,
         },
       })
         .then(res => {
@@ -74,6 +84,19 @@ export default {
         })
       this.loading = false
     },
+    selectedFilter(event) {
+      this.selectedSort = event.selectedSort;
+      this.selectedOrder = event.selectedOrder;
+      this.selectedCategory = event.selectedCategory;
+      this.fetchProducts()
+    }
+  },
+  async created() {
+    try {
+      this.allCategories = (await axios.get(`/all-categories`)).data
+    } catch (err) {
+      console.error(err)
+    }
   },
 }
 </script>

@@ -22,7 +22,7 @@
         </tbody>
       </table>
       <div class="mt-2">
-        <pagination :links="links" routeName="categories.index" />
+        <pagination :links="links" route-name="categories.index" />
       </div>
     </div>
   </div>
@@ -40,6 +40,14 @@ export default {
       categories: [],
       links: [],
     }
+  },
+  watch: {
+    '$route.query.page': {
+      immediate: true,
+      handler() {
+        this.fetchCategories()
+      },
+    },
   },
   created() {
     this.fetchCategories()
