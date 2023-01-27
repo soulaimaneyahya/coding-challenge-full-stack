@@ -1,4 +1,4 @@
-# Coding-challenge-backend-php
+# Coding-Challenge-Full-Stack
 
 ## Starting Project
 
@@ -46,21 +46,6 @@ php artisan db:seed
 - php artisan delete:category --id="" [--force]
 - php artisan create:product --name="" --desc="" --price=""
 - php artisan delete:product --id=""
-
-create & delete product using php artisan tinker:
-
-- Product::create(['name' => 'lorem ipsum', 'description' => 'lorem ipsum dolor sit ament', 'price' => 19]);
-- Product::first()->delete(); # or use ->forceDelete();
-
-- Category::create(['name' => 'lorem ipsum', 'parent_category_id' => Category::first()->id]);
-- Category::first()->delete(); # or use ->forceDelete();
-
-Attach product to category
-
-- $product = Product::first();
-- $category = Category::first();
-- $product->categories()->attach($category1);
-- $product->categories()->detach($category1);
 
 ----- 
 Need helps? Reach me out
