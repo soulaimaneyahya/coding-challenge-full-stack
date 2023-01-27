@@ -5,8 +5,8 @@
       <router-link :to="{name: 'products.create'}" class="btn btn-sm btn-dark">Create</router-link>
     </div>
     <filters
-    @selected:filter="selectedFilter($event)"
-    :allCategories="allCategories"
+      :all-categories="allCategories"
+      @selected:filter="selectedFilter($event)"
     />
     <div class="py-3">
       <table class="table m-0 p-0">
@@ -54,7 +54,7 @@ export default {
       allCategories: [],
       selectedSort: null,
       selectedOrder: null,
-      selectedCategory: null
+      selectedCategory: null,
     }
   },
   watch: {
@@ -65,8 +65,13 @@ export default {
       },
     },
   },
-  created() {
-    this.fetchProducts()
+  async created() {
+    try {
+      this.fetchProducts()
+      this.allCategories = (await axios.get('all-categories')).data
+    } catch (err) {
+      console.error(err)
+    }
   },
   methods: {
     fetchProducts() {
@@ -85,18 +90,11 @@ export default {
       this.loading = false
     },
     selectedFilter(event) {
-      this.selectedSort = event.selectedSort;
-      this.selectedOrder = event.selectedOrder;
-      this.selectedCategory = event.selectedCategory;
+      this.selectedSort = event.selectedSort
+      this.selectedOrder = event.selectedOrder
+      this.selectedCategory = event.selectedCategory
       this.fetchProducts()
-    }
-  },
-  async created() {
-    try {
-      this.allCategories = (await axios.get(`/all-categories`)).data
-    } catch (err) {
-      console.error(err)
-    }
+    },
   },
 }
 </script>

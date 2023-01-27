@@ -38,16 +38,10 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request): JsonResponse
     {
-        try {
-            $this->productService->store($request->validated());
-            return response()->json([
-                'message' => 'product created !',
-            ], 201);
-        } catch (Exception $ex) {
-            response()->json([
-                'message' => $ex->getMessage(),
-            ]);
-        }
+        $this->productService->store($request->validated());
+        return response()->json([
+            'message' => 'product created !',
+        ], 201);
     }
 
     /**
@@ -70,16 +64,10 @@ class ProductController extends Controller
      */
     public function update(ProductRequest $request, Product $product): JsonResponse
     {
-        try {
-            $this->productService->update($request->validated(), $product);
-            return response()->json([
-                'message' => 'product updated !',
-            ], 200);
-        } catch (Exception $ex) {
-            response()->json([
-                'message' => $ex->getMessage(),
-            ]);
-        }
+        $this->productService->update($request->validated(), $product);
+        return response()->json([
+            'message' => 'product updated !',
+        ], 200);
     }
 
     /**
@@ -90,15 +78,9 @@ class ProductController extends Controller
      */
     public function destroy(Product $product): JsonResponse
     {
-        try {
-            $this->productService->delete($product->id);
-            return response()->json([
-                'message' => 'product deleted !',
-            ], 200);
-        } catch (Exception $ex) {
-            response()->json([
-                'message' => $ex->getMessage(),
-            ]);
-        }
+        $this->productService->delete($product->id);
+        return response()->json([
+            'message' => 'product deleted !',
+        ], 200);
     }
 }

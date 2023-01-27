@@ -36,16 +36,10 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request): JsonResponse
     {
-        try {
-            $this->categoryService->store($request->validated());
-            return response()->json([
-                'message' => 'category created !',
-            ], 201);
-        } catch (Exception $ex) {
-            response()->json([
-                'message' => $ex->getMessage(),
-            ]);
-        }
+        $this->categoryService->store($request->validated());
+        return response()->json([
+            'message' => 'category created !',
+        ], 201);
     }
 
     /**
@@ -68,16 +62,10 @@ class CategoryController extends Controller
      */
     public function update(CategoryRequest $request, Category $category): JsonResponse
     {
-        try {
-            $this->categoryService->update($request->validated(), $category);
-            return response()->json([
-                'message' => 'category updated !',
-            ], 200);
-        } catch (Exception $ex) {
-            response()->json([
-                'message' => $ex->getMessage(),
-            ]);
-        }
+        $this->categoryService->update($request->validated(), $category);
+        return response()->json([
+            'message' => 'category updated !',
+        ], 200);
     }
 
     /**
@@ -87,15 +75,9 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category): JsonResponse
     {
-        try {
-            $this->categoryService->delete($category->id);
-            return response()->json([
-                'message' => 'category deleted !',
-            ], 200);
-        } catch (Exception $ex) {
-            response()->json([
-                'message' => $ex->getMessage(),
-            ]);
-        }
+        $this->categoryService->delete($category->id);
+        return response()->json([
+            'message' => 'category deleted !',
+        ], 200);
     }
 }

@@ -29,11 +29,11 @@ class ProductTest extends TestCase
             'image' => $image
         ];
 
-        $this->post('/products', $params)
-            ->assertStatus(302)
-            ->assertSessionHas('alert-success');
-
-        $this->assertEquals(session('alert-success'), 'Product Created !');
+        $response = $this->json('POST', "/api/v1/products", $params);
+        $response->assertStatus(201)
+            ->assertJsonFragment([
+                'message' => 'product created !'
+            ]);
     }
 
     public function testStoreFail()
@@ -44,13 +44,16 @@ class ProductTest extends TestCase
             'price' => fake()->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 100),
         ];
 
-        $this->post('/products', $params)
-            ->assertStatus(302)
-            ->assertSessionHas('errors');
-
-        $messages = session('errors')->getMessages();
-
-        $this->assertEquals($messages['image'][0], 'The image field is required.');
+        $response = $this->json('POST', "/api/v1/products", $params);
+        $response->assertStatus(422)
+            ->assertJsonFragment([
+                "message" => "The image field is required.",
+                "errors" => [
+                    "image" => [
+                        "The image field is required."
+                    ]
+                ]
+            ]);
     }
 
     public function testUpdateValid()
@@ -62,11 +65,12 @@ class ProductTest extends TestCase
         ]);
         $product->name = 'product-2';
 
-        $this->put("/products/{$product->id}", $product->toArray())
-            ->assertStatus(302)
-            ->assertSessionHas('alert-info');
+        $response = $this->json('PUT', "/api/v1/products/{$product->id}", $product->toArray());
+        $response->assertStatus(200)
+            ->assertJsonFragment([
+                'message' => 'product updated !'
+            ]);
 
-        $this->assertEquals(session('alert-info'), 'Product Updated !');
         $this->assertDatabaseMissing('products', [
             'name' => 'product-1',
         ]);
@@ -79,11 +83,11 @@ class ProductTest extends TestCase
     {
         $product = $this->createDummyProduct();
 
-        $this->delete("/products/{$product->id}")
-        ->assertStatus(302)
-        ->assertSessionHas('alert-info');
-
-        $this->assertEquals(session('alert-info'), 'Product Deleted !');
+        $response = $this->json('DELETE', "/api/v1/products/{$product->id}", $product->toArray());
+        $response->assertStatus(200)
+            ->assertJsonFragment([
+                'message' => 'product deleted !'
+            ]);
 
         $this->assertSoftDeleted('products', [
             'id' => $product->id

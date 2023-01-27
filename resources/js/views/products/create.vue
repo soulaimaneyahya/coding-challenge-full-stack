@@ -8,8 +8,10 @@
     <div class="my-4">
       <div class="form-group mb-3">
         <label for="name" class="text-muted">Product Name</label>
-        <input v-model="product.name" type="text" name="name" placeholder="Product Name" class="form-control"
-          :class="{ 'is-invalid': errorFor('name') }" />
+        <input
+          v-model="product.name" type="text" name="name" placeholder="Product Name" class="form-control"
+          :class="{ 'is-invalid': errorFor('name') }"
+        />
         <div v-if="errorFor('name')">
           <v-errors :errors="errorFor('name')" />
         </div>
@@ -17,8 +19,10 @@
 
       <div class="form-group mb-3">
         <label for="description" class="text-muted">Product Description</label>
-        <textarea v-model="product.description" name="description" placeholder="Product Description"
-          class="form-control" :class="{ 'is-invalid': errorFor('description') }" />
+        <textarea
+          v-model="product.description" name="description" placeholder="Product Description"
+          class="form-control" :class="{ 'is-invalid': errorFor('description') }"
+        />
         <div v-if="errorFor('description')">
           <v-errors :errors="errorFor('description')" />
         </div>
@@ -26,8 +30,10 @@
 
       <div class="form-group mb-3">
         <label for="price" class="text-muted">Price</label>
-        <input v-model.number="product.price" type="number" min="1" step=".01" name="price" placeholder="Price"
-          class="form-control" :class="{ 'is-invalid': errorFor('Price') }" />
+        <input
+          v-model.number="product.price" type="number" min="1" step=".01" name="price" placeholder="Price"
+          class="form-control" :class="{ 'is-invalid': errorFor('Price') }"
+        />
         <div v-if="errorFor('price')">
           <v-errors :errors="errorFor('price')" />
         </div>
@@ -36,8 +42,10 @@
       <div class="mb-3">
         <label for="category_id">Choose Category</label>
         <div v-for="category in allCategories" :key="'category' + category.id" class="form-check">
-          <input :id="'category-' + category.id" v-model="product.categories" class="form-check-input"
-            :class="{ 'is-invalid': errorFor('category_id') }" type="checkbox" :value="category.id" />
+          <input
+            :id="'category-' + category.id" v-model="product.categories" class="form-check-input"
+            :class="{ 'is-invalid': errorFor('category_id') }" type="checkbox" :value="category.id"
+          />
           <label class="form-check-label" :for="'category-' + category.id">{{ category.name }}</label>
         </div>
         <div v-if="errorFor('category_id')">
@@ -47,8 +55,10 @@
 
       <div class="mb-3">
         <label for="image" class="form-label">Attache Image</label>
-        <input id="image" class="form-control" :class="{ 'is-invalid': errorFor('image') }" type="file" name="image"
-          accept="image/png, image/gif, image/svg, image/jpg, image/jpeg" @change="uploadImage" />
+        <input
+          id="image" class="form-control" :class="{ 'is-invalid': errorFor('image') }" type="file" name="image"
+          accept="image/png, image/gif, image/svg, image/jpg, image/jpeg" @change="uploadImage"
+        />
         <div v-if="errorFor('image')">
           <v-errors :errors="errorFor('image')" />
         </div>
@@ -85,7 +95,7 @@ export default {
   },
   async created() {
     try {
-      this.allCategories = (await axios.get(`/all-categories`)).data
+      this.allCategories = (await axios.get('/all-categories')).data
     } catch (err) {
       console.error(err)
     }
