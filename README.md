@@ -1,5 +1,9 @@
 # Coding-Challenge-Full-Stack
 
+## Capture
+
+<img src="./public/img/2.png" />
+
 ## Starting Project
 
 1. install laravel packs

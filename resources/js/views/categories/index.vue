@@ -8,6 +8,8 @@
         <thead>
           <tr class="fw-bold">
             <th scope="col">Name</th>
+            <th scope="col">Parent Category</th>
+            <th scope="col">Products Count</th>
             <th scope="col">Created</th>
             <th scope="col" />
           </tr>

@@ -21,6 +21,11 @@ class Category extends Model
         'parent_category_id',
     ];
 
+    protected $hidden = [
+        'updated_at',
+        'deleted_at',
+    ];
+
     /**
      * createdAt format en diffForHumans
      * @return Attribute
