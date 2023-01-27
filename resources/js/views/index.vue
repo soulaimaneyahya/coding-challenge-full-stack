@@ -1,13 +1,13 @@
 <template>
-    <div>
-        <Nav class="py-3 shadow-sm bg-white" />
-        <RouterView class="py-3 container mx-auto" />
-    </div>
+  <main>
+    <NavBar class="py-3 shadow-sm bg-white" />
+    <RouterView class="py-3 container mx-auto" />
+  </main>
 </template>
 
 <script>
-import Nav from './partials/Nav.vue';
+import NavBar from '@/views/partials/NavBar.vue'
 export default {
-    components: { Nav }
+  components: { NavBar },
 }
 </script>

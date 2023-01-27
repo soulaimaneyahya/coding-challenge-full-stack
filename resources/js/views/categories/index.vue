@@ -5,27 +5,26 @@
     </div>
     <di class="py-3">
       <table class="table m-0 p-0">
-            <thead>
-                <tr class="fw-bold">
-                    <th scope="col">Name</th>
-                    <th scope="col">Created</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody v-if="categories && categories.length">
-                <category
-                  v-for="(category, index) in categories" :key="index"
-                  :category="category"
-                ></category>
-            </tbody>
-            <tbody v-else>
-                <tr>
-                  <td class="text-center" colspan="5">No category Found</td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="mt-2">
-        </div>
+        <thead>
+          <tr class="fw-bold">
+            <th scope="col">Name</th>
+            <th scope="col">Created</th>
+            <th scope="col" />
+          </tr>
+        </thead>
+        <tbody v-if="categories && categories.length">
+          <category
+            v-for="(category, index) in categories" :key="index"
+            :category="category"
+          />
+        </tbody>
+        <tbody v-else>
+          <tr>
+            <td class="text-center" colspan="5">No category Found</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="mt-2" />
     </di>
   </div>
 </template>
@@ -40,17 +39,17 @@ export default {
       categories: [],
     }
   },
-  methods: {
-    fetchCategories() {
-      axios.get('/api/v1/categories')
-      .then(res => {
-        this.categories = res.data.data;
-      })
-      this.loading = false
-    },
-  },
   created() {
     this.fetchCategories()
+  },
+  methods: {
+    fetchCategories() {
+      axios.get('/categories')
+        .then(res => {
+          this.categories = res.data.data
+        })
+      this.loading = false
+    },
   },
 }
 </script>
