@@ -1,9 +1,13 @@
-import '@/bootstrap'
-import { createApp } from 'vue'
+import '@/bootstrap';
+import router from "@/router";
+import { createApp } from 'vue';
 
-const app = createApp({})
+const app = createApp({});
 
-import index from '@/views/index.vue'
-app.component('Index', index)
+import index from "@/views/index.vue";
 
-app.mount('#app')
+app.component("index", index);
+
+app.use(router);
+
+app.mount('#app');

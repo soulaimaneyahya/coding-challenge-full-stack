@@ -13,6 +13,11 @@ class Image extends Model
     use HasFactory, HasUuids, SoftDeletes;
 
     protected $fillable = ['path'];
+    protected $appends = ['url'];
+    protected $hidden = [
+        'updated_at',
+        'deleted_at',
+    ];
 
     /**
      * imageable morphTo relationship
@@ -27,7 +32,7 @@ class Image extends Model
      * Get Product Url
      * @return string
      */
-    public function url(): string
+    public function getUrlAttribute(): string
     {
         return Storage::url($this->path);
     }

@@ -24,7 +24,7 @@ class ProductRepository implements RepositoryInterface
     {
         $products = $this->product
         ->with('image')
-        ->paginate(10)
+        ->paginate(5)
         ->appends([
             'category' => request('category'),
             'order' => request('order'),
