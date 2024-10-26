@@ -22,7 +22,7 @@ class Product extends Model
         'description',
         'price',
     ];
-    
+
     public $sortable = [
         'name', 'price'
     ];
@@ -31,6 +31,18 @@ class Product extends Model
         'updated_at',
         'deleted_at',
     ];
+
+    protected $casts = [
+        'price' => 'float',
+    ];
+
+    /**
+     * @return float
+     */
+    public function getPrice(): float
+    {
+        return (float) $this->price;
+    }
 
     /**
      * createdAt format en diffForHumans
