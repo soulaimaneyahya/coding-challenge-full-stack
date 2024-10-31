@@ -51,6 +51,16 @@ php artisan db:seed
 - php artisan create:product --name="" --desc="" --price=""
 - php artisan delete:product --id=""
 
+## API Documentation
+
+generate docs using `Swagger`;
+
+```sh
+php artisan l5-swagger:generate
+```
+
+[API Docs](http://127.0.0.1:8000/api/v1/documentation)
+
 ----- 
 Need helps? Reach me out
 
