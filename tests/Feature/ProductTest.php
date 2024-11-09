@@ -40,17 +40,16 @@ class ProductTest extends TestCase
     {
         $params = [
             'name' => fake()->sentence($nbWords = 6),
-            'description' => fake()->paragraph($nbSentences = 5),
             'price' => fake()->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 100),
         ];
 
         $response = $this->json('POST', "/api/v1/products", $params);
         $response->assertStatus(422)
             ->assertJsonFragment([
-                "message" => "The image field is required.",
+                "message" => "The description field is required.",
                 "errors" => [
-                    "image" => [
-                        "The image field is required."
+                    "description" => [
+                        "The description field is required."
                     ]
                 ]
             ]);
