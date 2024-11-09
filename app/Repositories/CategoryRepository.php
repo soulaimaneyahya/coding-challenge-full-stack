@@ -3,9 +3,9 @@
 namespace App\Repositories;
 
 use Exception;
+use App\Models\Product;
 use App\Models\Category;
 use App\Interfaces\RepositoryInterface;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class CategoryRepository implements RepositoryInterface
@@ -25,8 +25,8 @@ class CategoryRepository implements RepositoryInterface
         $categories = $this->category
         ->latest()
         ->with('parent')
-        ->withCount('products')
-        ->paginate(5);
+        ->withCount(Product::TABLE)
+        ->paginate(10);
 
         return $categories;
     }
@@ -34,9 +34,9 @@ class CategoryRepository implements RepositoryInterface
     /**
      * findOne Category
      * @param string $id
-     * @return Model
+     * @return Category
      */
-    public function findOne(string $id): Model
+    public function findOne(string $id): Category
     {
         try {
             return $this->category->findOrFail($id);

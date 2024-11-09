@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Category;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CategoryRequest extends FormRequest
@@ -24,8 +25,8 @@ class CategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['bail', 'required', 'min:5', 'max:255'],
-            'parent_category_id' => ['nullable', 'exists:categories,id'],
+            'name' => Category::NAME_RULES,
+            'parent_category_id' => Category::PARENT_CATEGORY_ID_RULES,
         ];
     }
 }

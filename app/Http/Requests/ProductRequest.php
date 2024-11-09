@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Product;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ProductRequest extends FormRequest
@@ -24,13 +25,13 @@ class ProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['bail', 'required', 'min:5', 'max:255'],
-            'description' => ['required', 'min:5', 'max:700'],
-            'price' => ['required', 'numeric', 'min:1'],
+            'name' => Product::NAME_RULES,
+            'description' => Product::DESCRIPTION_RULES,
+            'price' => Product::PRICE_RULES,
             'image' => $this->product ?
-                ['nullable', 'image', 'mimes:jpg,jpeg,png,gif,svg', 'max:2048'] :
-                ['nullable', 'image', 'mimes:jpg,jpeg,png,gif,svg', 'max:2048'],
-            'categories' => ['nullable', 'array', 'exists:categories,id'],
+                Product::IMAGE_RULES_UPDATE :
+                Product::IMAGE_RULES_CREATE,
+            'categories' => Product::CATEGORIES_RULES,
         ];
     }
 }
