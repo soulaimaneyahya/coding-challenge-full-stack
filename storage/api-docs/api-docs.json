@@ -1,0 +1,240 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "OpenApi Documentation",
+        "description": "L5 Swagger OpenApi description",
+        "contact": {
+            "email": "soulaimaneyahya1@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8000/api/v1",
+            "description": "API Server"
+        }
+    ],
+    "paths": {
+        "/products": {
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Get list of products",
+                "description": "Returns a paginated list of products",
+                "operationId": "c1ff6f862214e1896c59cfe0491ce0e8",
+                "responses": {
+                    "200": {
+                        "description": "A paginated list of products"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Create a new product",
+                "description": "Stores a new product in the database",
+                "operationId": "399770d33fa4672f1216707d0e236763",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ProductRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Product created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "product created !"
+                                        },
+                                        "product": {
+                                            "$ref": "#/components/schemas/ProductRequest"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/products/{id}": {
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Show product detail",
+                "description": "Show product detail",
+                "operationId": "b46f4aa73232d0368eee698a082342a4",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the product",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Show product detail"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Update an existing product",
+                "description": "Updates the details of an existing product",
+                "operationId": "1419d479f9340e30e67fe21a2ca525b7",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the product to update",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ProductRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Product updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "product updated !"
+                                        },
+                                        "product": {
+                                            "$ref": "#/components/schemas/ProductRequest"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Product not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Product not found !"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Delete a product",
+                "description": "Deletes an existing product from the database",
+                "operationId": "fe34b364a3f192305598b65d04d06b5d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the product to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Product deleted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "product deleted !"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ProductRequest": {
+                "required": [
+                    "name",
+                    "price",
+                    "description",
+                    "image"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "Product"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Product details description"
+                    },
+                    "price": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 19.99
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Products",
+            "description": "Products"
+        }
+    ]
+}

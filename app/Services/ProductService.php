@@ -50,7 +50,7 @@ class ProductService
     public function store(array $data): Product
     {
         $product = $this->product->create($data);
-        
+
         if (isset($data['image']) && $data['image'] instanceof \Illuminate\Http\UploadedFile) {
             $path = $data['image']->store('products');
             $product->image()->save(

@@ -5,7 +5,6 @@ namespace App\Repositories;
 use Exception;
 use App\Models\Product;
 use App\Interfaces\RepositoryInterface;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class ProductRepository implements RepositoryInterface
@@ -23,23 +22,23 @@ class ProductRepository implements RepositoryInterface
     public function all(): LengthAwarePaginator
     {
         $products = $this->product
-        ->with('image')
-        ->paginate(5)
-        ->appends([
-            'category' => request('category'),
-            'order' => request('order'),
-            'sort_by' => request('sort_by')
-        ]);
+            ->with('image')
+            ->paginate(10)
+            ->appends([
+                'category' => request('category'),
+                'order' => request('order'),
+                'sort_by' => request('sort_by')
+            ]);
 
-        return $products;
+            return $products;
     }
 
     /**
      * findOne Product
      * @param string $id
-     * @return Model
+     * @return Product
      */
-    public function findOne(string $id): Model
+    public function findOne(string $id): Product
     {
         try {
             return $this->product->findOrFail($id);
